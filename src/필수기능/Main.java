@@ -13,6 +13,11 @@ public class Main {
         commerceSystem.addProductToCategory(product3, "전자제품");
         commerceSystem.addProductToCategory(product4, "전자제품");
 
+//        Customer customer1 = new Customer("Steve", "steve232@gmail.com", "BRONZE");
+//        Customer customer2 = new Customer("Tom", "tom10@daum.net", "SILVER");
+//        Customer customer3 = new Customer("Kim", "kim7@naver.com", "GOLD");
+//        Customer customer4 = new Customer("Park", "park23@gmail.com", "PLATINUM");
+
         commerceSystem.start();
     }
 }
