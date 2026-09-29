@@ -16,9 +16,10 @@ public class Cart {
     public void addItems(Product product, int quantity){
         //중복 확인
         int totalprice = product.getIntPrice()*quantity;
-        size += quantity;
+        System.out.println("here1");
         for(CartItem cartItem : cartItems){
             if(cartItem.getProduct().getId() == product.getId()){
+                System.out.println("here2");
                 int newQuantity = cartItem.getQuantity() + quantity;
                 if(newQuantity > product.getAmount()){
                     System.out.println("(장바구니) 재고가 부족하여 추가할 수 없습니다.");
@@ -28,12 +29,15 @@ public class Cart {
                 cartItem.setTotalPrice(cartItem.getTotalPrice() + totalprice);
                 cartItem.setQuantity(newQuantity);
                 System.out.println(product.getName() + "가 장바구니에 추가되었습니다.");
+                size += quantity;
                 return;
             }
         }
 
         CartItem cartItem = new CartItem(product,totalprice,quantity);
         cartItems.add(cartItem);
+        System.out.println(product.getName() + "가 장바구니에 추가되었습니다.");
+        size += quantity;
     }
 
     public boolean isEmpty(){

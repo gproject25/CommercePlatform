@@ -44,4 +44,5 @@ public class Category {
         System.out.println("\n선택한 상품: " + p.getName() + " | " + p.getPrice() + " | " + p.getDescription() + " | 재고: " + p.getAmount());
         return p;
     }
+
 }

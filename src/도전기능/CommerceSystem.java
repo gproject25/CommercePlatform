@@ -1,22 +1,32 @@
 package 도전기능;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class CommerceSystem {
     private Scanner keyboard;
-    private Category electronics;
-    private Category clothing;
-    private Category food;
     private Cart cart;
     private String input;
+    private Admin admin;
+
+    private List<Category> categoryList;
 
     public CommerceSystem(){
-        electronics = new Category("전자제품");
-        clothing =  new Category("의류");
-        food = new Category("삭품");
+        Category electronics = new Category("전자제품");
+        Category clothing =  new Category("의류");
+        Category food = new Category("식품");
+
+        categoryList = new ArrayList<>();
+        categoryList.add(electronics);
+        categoryList.add(clothing);
+        categoryList.add(food);
+
+
         keyboard = new Scanner(System.in);
         cart = new Cart();
+        admin = new Admin();
     }
 
     public void start(){
@@ -26,21 +36,22 @@ public class CommerceSystem {
             System.out.println("1. 전자제품");
             System.out.println("2. 의류");
             System.out.println("3. 식품");
+            System.out.println("4. 관리자 모드");
             System.out.println("0. 프로그램 종료");
 
             if(!cart.isEmpty()){
                 System.out.println("\n[ 주문 관리 ]");
-                System.out.println("4. 장바구니 확인");
-                System.out.println("5. 주문 취소");
+                System.out.println("5. 장바구니 확인");
+                System.out.println("6. 주문 취소");
             }
 
             System.out.println("-------------------------");
             System.out.print("\n메뉴를 선택하세요: ");
             input = keyboard.next();
 
-            while (!input.equals("0") && !input.equals("1") && !input.equals("2") && !input.equals("3")) {
+            while (!input.equals("0") && !input.equals("1") && !input.equals("2") && !input.equals("3") && !input.equals("4")) {
                 if(!cart.isEmpty()){
-                    if(input.equals("4") || input.equals("5"))
+                    if(input.equals("5") || input.equals("6"))
                         break;
                 }
 
@@ -48,22 +59,30 @@ public class CommerceSystem {
                 input = keyboard.next();
             }
 
+
+            Category category = null;
             switch (input) {
                 case "1":
-                    while(selectMenu(electronics) == 1) {}
+                    category = findCategory("전자제품");
+                    while (selectMenu(category) == 1) {}
                     break;
                 case "2":
-                    while(selectMenu(clothing) == 1) {};
+                    category = findCategory("의류");
+                    while (selectMenu(category) == 1) {}
                     break;
                 case "3":
-                    while(selectMenu(food) == 1) {};
+                    category = findCategory("식품");
+                    while (selectMenu(category) == 1) {}
                     break;
                 case "0":
                     return;
                 case "4":
-                    cart.orderCart();
+                    admin.adminMenu();
                     break;
                 case "5":
+                    cart.orderCart();
+                    break;
+                case "6":
                     cart.clearCart();
                     System.out.println("주문을 취소했습니다.");
                     break;
@@ -76,11 +95,11 @@ public class CommerceSystem {
 
     public void addProductToCategory(Product newitem, String category){
         if(category.equals("전자제품"))
-            electronics.addProducts(newitem);
+            findCategory("전자제품").addProducts(newitem);
         else if(category.equals("의류"))
-            clothing.addProducts(newitem);
+            findCategory("전자제품").addProducts(newitem);
         else if(category.equals("식품"))
-            food.addProducts(newitem);
+            findCategory("전자제품").addProducts(newitem);
     }
 
     public int selectMenu(Category category){
@@ -158,4 +177,14 @@ public class CommerceSystem {
         }
 
     }
+
+    private Category findCategory(String categoryName) {
+        for (Category ct : categoryList) {
+            if (categoryName.equals(ct.getCategoryName())) {
+                return ct;
+            }
+        }
+        return null;
+    }
+
 }
