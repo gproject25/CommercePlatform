@@ -22,7 +22,12 @@ public class Category {
 
         for (int i = 0; i < products.size(); i++) {
             Product iproduct = products.get(i);
-            System.out.printf("%d. %-15s | %10s | %s%n", i + 1, iproduct.getName(), iproduct.getPrice(), iproduct.getDescription());
+            System.out.printf("%d. ", i + 1);
+
+            if(iproduct.getAmount() == 0)
+                System.out.print("(품절) ");
+
+            System.out.printf("%-15s | %10s | %s%n", iproduct.getName(), iproduct.getPrice(), iproduct.getDescription());
         }
     }
 

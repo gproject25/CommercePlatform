@@ -32,6 +32,11 @@ public class Product {
     public int getAmount() {
         return amount;
     }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
     public int getIntPrice(){
         String intprice = this.price;
         int priceInt = Integer.parseInt(intprice.replace(",", "").replace("원", ""));

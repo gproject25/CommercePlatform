@@ -63,6 +63,10 @@ public class CommerceSystem {
                 case "4":
                     cart.orderCart();
                     break;
+                case "5":
+                    cart.clearCart();
+                    System.out.println("주문을 취소했습니다.");
+                    break;
                 default:
                     continue;
             }
@@ -144,7 +148,6 @@ public class CommerceSystem {
                         break;
                     }
                     cart.addItems(product, input2);
-                    System.out.println(product.getName() + "가 장바구니에 추가되었습니다.");
                     break;
                 }
                 catch(InputMismatchException e){
