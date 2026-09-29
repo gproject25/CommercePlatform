@@ -19,7 +19,20 @@ public class CartItem {
         return totalPrice;
     }
 
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getStringTotalPrice() {
+        int temp = totalPrice;
+        return String.format("%,d원", temp);
+    }
+
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
