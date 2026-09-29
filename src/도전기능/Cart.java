@@ -16,10 +16,8 @@ public class Cart {
     public void addItems(Product product, int quantity){
         //중복 확인
         int totalprice = product.getIntPrice()*quantity;
-        System.out.println("here1");
         for(CartItem cartItem : cartItems){
             if(cartItem.getProduct().getId() == product.getId()){
-                System.out.println("here2");
                 int newQuantity = cartItem.getQuantity() + quantity;
                 if(newQuantity > product.getAmount()){
                     System.out.println("(장바구니) 재고가 부족하여 추가할 수 없습니다.");
