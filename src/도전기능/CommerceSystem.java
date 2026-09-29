@@ -21,17 +21,30 @@ public class CommerceSystem {
 
     public void start(){
         while(true) {
-            System.out.println("\n[ 실시간 커머스 플랫폼 메인 ]");
+            System.out.println("\n-------------------------");
+            System.out.println("[ 실시간 커머스 플랫폼 메인 ]");
             System.out.println("1. 전자제품");
             System.out.println("2. 의류");
             System.out.println("3. 식품");
             System.out.println("0. 프로그램 종료");
 
-            System.out.print("메뉴를 선택하세요 (1,2,3,0): ");
+            if(!cart.isEmpty()){
+                System.out.println("\n[ 주문 관리 ]");
+                System.out.println("4. 장바구니 확인");
+                System.out.println("5. 주문 취소");
+            }
+
+            System.out.println("-------------------------");
+            System.out.print("\n메뉴를 선택하세요: ");
             input = keyboard.next();
 
             while (!input.equals("0") && !input.equals("1") && !input.equals("2") && !input.equals("3")) {
-                System.out.print("다시 입력하세요! (1,2,3,0): ");
+                if(!cart.isEmpty()){
+                    if(input.equals("4") || input.equals("5"))
+                        break;
+                }
+
+                System.out.print("다시 입력하세요!: ");
                 input = keyboard.next();
             }
 
@@ -47,6 +60,13 @@ public class CommerceSystem {
                     break;
                 case "0":
                     return;
+                case "4":
+                    cart.orderCart();
+                    break;
+                case "5":
+                    cart.clearCart();
+                    System.out.println("주문을 취소했습니다.");
+                    break;
                 default:
                     continue;
             }
@@ -124,11 +144,10 @@ public class CommerceSystem {
                         break;
                     }
                     else if(input2==0) {
-                        System.out.println("주문을 취소했습니다");
+                        System.out.println("상품을 추가하지 않았습니다.");
                         break;
                     }
                     cart.addItems(product, input2);
-                    System.out.println(product.getName() + "가 장바구니에 추가되었습니다.");
                     break;
                 }
                 catch(InputMismatchException e){
