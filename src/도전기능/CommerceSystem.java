@@ -9,7 +9,7 @@ public class CommerceSystem {
     private Scanner keyboard;
     private Cart cart;
     private String input;
-    private Admin admin;
+    private Admin admin; //시스템마다 하나의 admin 가정
 
     private List<Category> categoryList;
 
@@ -26,7 +26,11 @@ public class CommerceSystem {
 
         keyboard = new Scanner(System.in);
         cart = new Cart();
-        admin = new Admin();
+        admin = new Admin(this);
+    }
+
+    public List<Category> getCategoryList() {
+        return categoryList;
     }
 
     public void start(){
@@ -77,7 +81,9 @@ public class CommerceSystem {
                 case "0":
                     return;
                 case "4":
-                    admin.adminMenu();
+                    if(admin.adminLogin() == 0)
+                        break;
+                    while(admin.adminMenu() == 1){}
                     break;
                 case "5":
                     cart.orderCart();
@@ -93,13 +99,11 @@ public class CommerceSystem {
 
     }
 
-    public void addProductToCategory(Product newitem, String category){
-        if(category.equals("전자제품"))
-            findCategory("전자제품").addProducts(newitem);
-        else if(category.equals("의류"))
-            findCategory("전자제품").addProducts(newitem);
-        else if(category.equals("식품"))
-            findCategory("전자제품").addProducts(newitem);
+    public void addProductToCategory(Product newItem, String category){
+        Category ct = findCategory(category);
+
+        if (ct != null)
+            ct.addProducts(newItem);
     }
 
     public int selectMenu(Category category){
