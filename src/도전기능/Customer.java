@@ -10,4 +10,16 @@ public class Customer {
         this.email = email;
         this.rank = rank;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getRank() {
+        return rank;
+    }
 }

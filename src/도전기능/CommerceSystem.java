@@ -12,6 +12,8 @@ public class CommerceSystem {
     private Admin admin; //시스템마다 하나의 admin 가정
 
     private List<Category> categoryList;
+    private List<Customer> customers;
+    private Customer currentCustomer;
 
     public CommerceSystem(){
         Category electronics = new Category("전자제품");
@@ -27,13 +29,59 @@ public class CommerceSystem {
         keyboard = new Scanner(System.in);
         cart = new Cart();
         admin = new Admin(this);
+        customers = new ArrayList<>();
     }
 
     public List<Category> getCategoryList() {
         return categoryList;
     }
 
+    public int login(){
+        System.out.println();
+        System.out.println("==================================================");
+        System.out.println("                 실시간 커머스 플랫폼");
+        System.out.println("==================================================");
+        System.out.println();
+        System.out.println("        1. 로그인                    2. 종료");
+        System.out.println();
+        System.out.println("--------------------------------------------------");
+        input = keyboard.nextLine();
+
+        while(!input.equals("1") && !input.equals("2")){
+            System.out.print("다시 입력하세요: ");
+            input = keyboard.nextLine();
+        }
+        if(input.equals("1")){
+            System.out.println();
+            System.out.println("==================================================");
+            System.out.println("                    사용자 선택");
+            System.out.println("==================================================");
+            System.out.println();
+            for(int i=0; i<customers.size(); i++){
+                Customer customer = customers.get(i);
+                System.out.printf("  %d. %-12s | 등급: %s%n", i + 1, customer.getName(), customer.getRank());
+            }
+            System.out.println();
+            System.out.println("--------------------------------------------------");
+            System.out.print("로그인할 사용자를 선택하세요: ");
+            int input2 = admin.readPositiveInt();
+            while(input2 > customers.size()) {
+                System.out.print("다시 입력하세요: ");
+                input2 = admin.readPositiveInt();
+            }
+            this.currentCustomer = customers.get(input2-1);
+            return 0;
+        }
+        else
+            return -1;
+    }
+
     public void start(){
+        if(login() == -1)
+            return;
+
+        System.out.println("\n안녕하세요 "+ currentCustomer.getName() + "님!");
+
         while(true) {
             System.out.println("\n-------------------------");
             System.out.println("[ 실시간 커머스 플랫폼 메인 ]");
@@ -97,6 +145,10 @@ public class CommerceSystem {
             }
         }
 
+    }
+
+    public void addCustomer(Customer customer){
+        customers.add(customer);
     }
 
     public void addProductToCategory(Product newItem, String category){
@@ -236,7 +288,5 @@ public class CommerceSystem {
             }
         }
     }
-
-
 
 }
