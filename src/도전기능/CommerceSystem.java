@@ -190,12 +190,36 @@ public class CommerceSystem {
         return null;
     }
 
-    public void printAllProducts(){
+    public Product selectFromProducts(String msg){
+        int count = 1;
+
+        System.out.println("\n[ " + msg + " 전체 상품 ID 목록 ] ");
         for(Category ct : categoryList){
             for(Product p : ct.getProducts()){
-                System.out.println("- " + p.getName());
+                System.out.println(p.getId() + " - " + p.getName());
             }
         }
+
+        System.out.print("\n상품 ID를 입력하세요: ");
+        int id = admin.readPositiveInt();
+
+        Product foundProduct = findProduct(id);
+        if(findProduct(id) == null){
+            System.out.println("상품을 찾지 못했습니다.");
+            return null;
+        }
+
+        return foundProduct;
+    }
+
+    public Product findProduct(int id){
+        for(Category ct : categoryList){
+            for(Product p : ct.getProducts()){
+                if(p.getId() == id)
+                    return p;
+            }
+        }
+        return null;
     }
 
 }

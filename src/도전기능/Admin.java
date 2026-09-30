@@ -59,6 +59,9 @@ public class Admin {
             case "2":
                 adminEditProduct();
                 break;
+            case "3":
+                adminDeleteProduct();
+                break;
             case "0":
                 return 0;
             default:
@@ -68,6 +71,26 @@ public class Admin {
         return 1;
     }
 
+    public int readPositiveInt() {
+        while (true) {
+            try {
+                int value = keyboard.nextInt();
+                keyboard.nextLine();
+
+                if (value > 0) {
+                    return value;
+                }
+
+                System.out.print("다시 입력하세요!: ");
+
+            } catch (InputMismatchException e) {
+                System.out.print("숫자를 입력하세요!: ");
+                keyboard.next();
+            }
+        }
+    }
+
+    // --------------------------------- 카테고리에 상품 추가 ----------------------------------------------
     public void adminAddProduct(){
         System.out.println("\n어느 카테고리에 상품을 추가하시겠습니까?");
         for(int i=0; i<commerceSystem.getCategoryList().size(); i++){
@@ -88,25 +111,6 @@ public class Admin {
             }
             catch (InputMismatchException e) {
                 System.out.print("다시 입력하세요!: ");
-                keyboard.next();
-            }
-        }
-    }
-
-    private int readPositiveInt() {
-        while (true) {
-            try {
-                int value = keyboard.nextInt();
-                keyboard.nextLine();
-
-                if (value > 0) {
-                    return value;
-                }
-
-                System.out.print("다시 입력하세요!: ");
-
-            } catch (InputMismatchException e) {
-                System.out.print("숫자를 입력하세요!: ");
                 keyboard.next();
             }
         }
@@ -151,36 +155,14 @@ public class Admin {
             System.out.println("상품이 성공적으로 추가되었습니다!");
         }
     }
+    //------------------------------------------------------------------------------------------
 
+
+    // ---------------------------------  상품 수정 ----------------------------------------------
     private void adminEditProduct(){
-
-        System.out.println("\n[ 전체 상품 ]");
-        commerceSystem.printAllProducts();
-        System.out.println();
-
-        System.out.print("수정할 상품명을 입력해주세요: ");
-        input = keyboard.nextLine();
-
-        List<Category> categoryList = commerceSystem.getCategoryList();
-        Product foundProduct = null;
-        for(int i=0; i<categoryList.size(); i++){
-            Category ct = categoryList.get(i);
-            List<Product> products = ct.getProducts();
-            for(int j=0; j<products.size(); j++){
-                if(input.equals(products.get(j).getName())){
-                    foundProduct = products.get(j);
-                    break;
-                }
-            }
-            if(foundProduct != null){
-                break;
-            }
-        }
-
-        if(foundProduct == null) {
-            System.out.println(input + " -> 상품 목록에 없습니다.");
+        Product foundProduct = commerceSystem.selectFromProducts("(상품 수정)");
+        if(foundProduct == null)
             return;
-        }
 
         //상품 수정 항목
         System.out.println("현재 상품 정보: " + foundProduct.getName() + " | " + foundProduct.getPrice() + " | " + foundProduct.getDescription() + " | 재고" + foundProduct.getAmount() + "개");
@@ -223,4 +205,13 @@ public class Admin {
         }
 
     }
+    //----------------------------------------------------------------------------------------------------
+
+
+    // --------------------------------- 카테고리에서 상품 삭제 ----------------------------------------------
+    private void adminDeleteProduct(){
+        Product p = commerceSystem.selectFromProducts("(상품 삭제)");
+
+    }
+
 }

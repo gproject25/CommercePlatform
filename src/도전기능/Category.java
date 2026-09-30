@@ -56,4 +56,8 @@ public class Category {
     public List<Product> getProducts() {
         return products;
     }
+
+    public void RemoveProduct(int index){
+        products.remove(index);
+    }
 }

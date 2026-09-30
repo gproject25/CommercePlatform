@@ -1,7 +1,7 @@
 package 도전기능;
 
 public class Product {
-    private static int productId = 0; //product 생성시 증가
+    private static int productId = 100; //product 생성시 증가
 
     private int id;
     private String name;
@@ -15,6 +15,10 @@ public class Product {
         this.price = price;
         this.description = description;
         this.amount = amount;
+    }
+
+    public static int getProductId() {
+        return productId;
     }
 
     public int getId() {
