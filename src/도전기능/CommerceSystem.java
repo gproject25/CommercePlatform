@@ -181,6 +181,10 @@ public class CommerceSystem {
         }
     }
 
+    public void removeFromCart(Product p){
+        cart.removeItems(p);
+    }
+
     private Category findCategory(String categoryName) {
         for (Category ct : categoryList) {
             if (categoryName.equals(ct.getCategoryName())) {
@@ -191,9 +195,7 @@ public class CommerceSystem {
     }
 
     public Product selectFromProducts(String msg){
-        int count = 1;
-
-        System.out.println("\n[ " + msg + " 전체 상품 ID 목록 ] ");
+        System.out.println("\n[ " + msg + "전체 상품 ID 목록 ] ");
         for(Category ct : categoryList){
             for(Product p : ct.getProducts()){
                 System.out.println(p.getId() + " - " + p.getName());
@@ -221,5 +223,20 @@ public class CommerceSystem {
         }
         return null;
     }
+
+    public void printAllProducts(){
+        System.out.println("\n[ 전체 상품 현황 ] ");
+        System.out.println("----------------------------------------------------------------------------");
+        System.out.printf("| %-5s | %-10s | %-10s | %-20s | %-5s%n", "ID", "상품명", "가격", "설명", "재고");
+        System.out.println("----------------------------------------------------------------------------");
+
+        for(Category ct : categoryList){
+            for(Product p : ct.getProducts()){
+                System.out.printf("| %-5d | %-10s | %s | %s | 재고: %d%n", p.getId(), p.getName(), p.getPrice(), p.getDescription(), p.getAmount());
+            }
+        }
+    }
+
+
 
 }

@@ -1,7 +1,6 @@
 package 도전기능;
 
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 public class Admin {
@@ -25,11 +24,11 @@ public class Admin {
 
         while(!input.equals(password)){
             if(wrongCount == 3){
-                System.out.println("인증에 실패했습니다. (3)  다시 시도해주세요.");
+                System.out.println("인증에 실패했습니다. (오류 횟수: 3)  다시 시도해주세요.");
                 return 0;
             }
 
-            System.out.print("잘못된 비밀번호입니다. (" + wrongCount + ") 다시 입력하세요:");
+            System.out.print("잘못된 비밀번호입니다. (오류 횟수: " + wrongCount + ") 다시 입력하세요:");
             input = keyboard.nextLine();
             wrongCount++;
         }
@@ -61,6 +60,9 @@ public class Admin {
                 break;
             case "3":
                 adminDeleteProduct();
+                break;
+            case "4":
+                commerceSystem.printAllProducts();
                 break;
             case "0":
                 return 0;
@@ -226,7 +228,9 @@ public class Admin {
 
         if(input.equals("1")){
             for(Category ct : commerceSystem.getCategoryList()){
+                commerceSystem.removeFromCart(p);
                 if(ct.removeProduct(p.getId())){
+                    commerceSystem.removeFromCart(p);
                     System.out.println("상품이 성공적으로 삭제되었습니다!");
                     return;
                 }
@@ -234,5 +238,4 @@ public class Admin {
         }
     }
     // ---------------------------------------------------------------------------------------------------------
-
 }

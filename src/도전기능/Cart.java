@@ -38,6 +38,15 @@ public class Cart {
         size += quantity;
     }
 
+    public void removeItems(Product p){
+        for(int i=0; i<cartItems.size(); i++){
+            if(p.getId() == cartItems.get(i).getProduct().getId()){
+                size -= cartItems.get(i).getQuantity();
+                cartItems.remove(i);
+            }
+        }
+    }
+
     public boolean isEmpty(){
         if(size==0)
             return true;
