@@ -27,7 +27,7 @@ public class Category {
             if(iproduct.getAmount() == 0)
                 System.out.print("(품절) ");
 
-            System.out.printf("%-15s | %10s | %s%n", iproduct.getName(), iproduct.getPrice(), iproduct.getDescription());
+            System.out.printf("%-15s | %10s | %s | 재고: %d%n", iproduct.getName(), iproduct.getPrice(), iproduct.getDescription(), iproduct.getAmount());
         }
     }
 
@@ -43,5 +43,27 @@ public class Category {
         Product p = products.get(index);
         System.out.println("\n선택한 상품: " + p.getName() + " | " + p.getPrice() + " | " + p.getDescription() + " | 재고: " + p.getAmount());
         return p;
+    }
+
+    public boolean checkDuplicate(String productName){
+        for(Product p : products){
+            if(p.getName().equals(productName))
+                return true;
+        }
+        return false;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public boolean removeProduct(int id){
+        for(int i=0; i<products.size(); i++){
+            if(products.get(i).getId() == id){
+                products.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
 }
