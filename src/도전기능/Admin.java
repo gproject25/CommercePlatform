@@ -46,17 +46,19 @@ public class Admin {
         System.out.println("4. 전체 상품 현황");
         System.out.println("0. 메인으로 돌아가기");
 
-        input = keyboard.next();
+        input = keyboard.nextLine();
         while (!input.equals("1") && !input.equals("2") && !input.equals("3") && !input.equals("4") && !input.equals("0")) {
             System.out.print("다시 입력하세요!: ");
-            input = keyboard.next();
+            input = keyboard.nextLine();
         }
 
         switch(input){
             case "1":
                 adminAddProduct();
                 break;
-
+            case "2":
+                adminEditProduct();
+                break;
             case "0":
                 return 0;
             default:
@@ -87,7 +89,6 @@ public class Admin {
             catch (InputMismatchException e) {
                 System.out.print("다시 입력하세요!: ");
                 keyboard.next();
-                break;
             }
         }
     }
@@ -118,6 +119,11 @@ public class Admin {
         System.out.print("상품명을 입력해주세요: ");
         String productName = keyboard.nextLine();
 
+        if(category.checkDuplicate(productName)){
+            System.out.println("중복 상품명이 있습니다!");
+            return;
+        }
+
         String productDesc;
         System.out.print("가격을 입력해주세요: ");
         int productPrice = readPositiveInt();
@@ -142,6 +148,79 @@ public class Admin {
         if(input.equals("1")){
             Product product = new Product(productName,price,productDesc,productAmount);
             commerceSystem.addProductToCategory(product, category.getCategoryName());
+            System.out.println("상품이 성공적으로 추가되었습니다!");
         }
+    }
+
+    private void adminEditProduct(){
+
+        System.out.println("\n[ 전체 상품 ]");
+        commerceSystem.printAllProducts();
+        System.out.println();
+
+        System.out.print("수정할 상품명을 입력해주세요: ");
+        input = keyboard.nextLine();
+
+        List<Category> categoryList = commerceSystem.getCategoryList();
+        Product foundProduct = null;
+        for(int i=0; i<categoryList.size(); i++){
+            Category ct = categoryList.get(i);
+            List<Product> products = ct.getProducts();
+            for(int j=0; j<products.size(); j++){
+                if(input.equals(products.get(j).getName())){
+                    foundProduct = products.get(j);
+                    break;
+                }
+            }
+            if(foundProduct != null){
+                break;
+            }
+        }
+
+        if(foundProduct == null) {
+            System.out.println(input + " -> 상품 목록에 없습니다.");
+            return;
+        }
+
+        //상품 수정 항목
+        System.out.println("현재 상품 정보: " + foundProduct.getName() + " | " + foundProduct.getPrice() + " | " + foundProduct.getDescription() + " | 재고" + foundProduct.getAmount() + "개");
+        System.out.println("\n수정할 항목을 선택해주세요:");
+        System.out.println("1. 가격");
+        System.out.println("2. 설명 ");
+        System.out.println("3. 재고수량");
+
+        input = keyboard.nextLine();
+        while (!input.equals("1") && !input.equals("2") && !input.equals("3")){
+            System.out.print("다시 입력하세요!: ");
+            input = keyboard.nextLine();
+        }
+
+        System.out.println();
+        switch(input){
+            case "1":
+                System.out.println("현재 가격: " + foundProduct.getPrice());
+                System.out.print("새로운 가격을 입력해주세요: ");
+                String newPrice = String.format("%,d원", readPositiveInt());
+                System.out.println(foundProduct.getName() + "의 가격이 " + foundProduct.getPrice() + " -> " + newPrice + "으로 수정되었습니다.");
+                foundProduct.setPrice(newPrice);
+                break;
+            case "2":
+                System.out.println("현재 설명: " + foundProduct.getDescription());
+                System.out.print("새로운 설명을 입력해주세요: ");
+                String newDesc = keyboard.nextLine();
+                System.out.println(foundProduct.getName() + "의 설명이 '" + foundProduct.getDescription() + "' -> '" + newDesc + "'으로 수정되었습니다.");
+                foundProduct.setDescription(newDesc);
+                break;
+            case "3":
+                System.out.println("현재 재고수량: " + foundProduct.getAmount());
+                System.out.print("새로운 재고수량을 입력해주세요: ");
+                int newAmount = readPositiveInt();
+                System.out.println(foundProduct.getName() + "의 재고수량이 " + foundProduct.getAmount() + " -> " + newAmount + "으로 수정되었습니다.");
+                foundProduct.setAmount(newAmount);
+                break;
+            default:
+                return;
+        }
+
     }
 }

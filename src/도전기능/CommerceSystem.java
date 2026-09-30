@@ -179,7 +179,6 @@ public class CommerceSystem {
                 }
             }
         }
-
     }
 
     private Category findCategory(String categoryName) {
@@ -189,6 +188,14 @@ public class CommerceSystem {
             }
         }
         return null;
+    }
+
+    public void printAllProducts(){
+        for(Category ct : categoryList){
+            for(Product p : ct.getProducts()){
+                System.out.println("- " + p.getName());
+            }
+        }
     }
 
 }
