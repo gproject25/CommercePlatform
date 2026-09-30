@@ -124,6 +124,10 @@ public class Admin {
 
         System.out.print("상품명을 입력해주세요: ");
         String productName = keyboard.nextLine();
+        while(productName.isBlank()){
+            System.out.print("상품명은 공백일 수 없습니다. 다시 입력해주세요:");
+            productName = keyboard.nextLine();
+        }
 
         if(category.checkDuplicate(productName)){
             System.out.println("중복 상품명이 있습니다!");

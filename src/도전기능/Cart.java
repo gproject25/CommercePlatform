@@ -54,7 +54,7 @@ public class Cart {
             return false;
     }
 
-    public void orderCart(){
+    public void orderCart(CustomerRank customerRank){
         System.out.println("\n아래와 같이 주문 하시겠습니까?\n");
         System.out.println("[ 장바구니 내역 ]");
 
@@ -73,6 +73,12 @@ public class Cart {
         System.out.println("\n[ 총 주문 금액 ]");
         System.out.println("상품 " + size + "개: " + String.format("%,d원", totalCost));
 
+        double discountRate = customerRank.getDiscountRate() / 100.0;
+        int discount = (int) (totalCost * discountRate);
+        System.out.println(customerRank.name() + " 등급 할인(" + customerRank.getDiscountRate() + "%): -" + String.format("%,d원", discount));
+        totalCost = totalCost - discount;
+        System.out.println("최종 결제 금액: " + String.format("%,d원", totalCost));
+
         System.out.println("\n1. 주문 확정      2. 메인으로 돌아가기");
 
         String input = keyboard.next();
@@ -81,7 +87,11 @@ public class Cart {
             input = keyboard.next();
         }
         if(input.equals("1")) {
-            System.out.println("주문이 완료되었습니다! 총 금액: " + String.format("%,d원", totalCost));
+            System.out.println("주문이 완료되었습니다!");
+            System.out.println();
+
+            // rank upgrade system
+
             for(CartItem cartItem : cartItems) {
                 Product p = cartItem.getProduct();
                 int newAmount = p.getAmount() - cartItem.getQuantity();
@@ -90,8 +100,6 @@ public class Cart {
             }
             clearCart();
         }
-        //input 2-> return
-
     }
 
     public void clearCart(){

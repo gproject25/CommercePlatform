@@ -7,8 +7,7 @@ import java.util.Scanner;
 
 public class CommerceSystem {
     private Scanner keyboard;
-    private Cart cart;
-    private String input;
+    private Cart cart;;
     private Admin admin; //시스템마다 하나의 admin 가정
 
     private List<Category> categoryList;
@@ -42,12 +41,11 @@ public class CommerceSystem {
         System.out.println("                 실시간 커머스 플랫폼");
         System.out.println("==================================================");
         System.out.println();
-        System.out.println("        1. 로그인                    2. 종료");
+        System.out.println("        1. 로그인                   0. 종료");
         System.out.println();
         System.out.println("--------------------------------------------------");
-        input = keyboard.nextLine();
-
-        while(!input.equals("1") && !input.equals("2")){
+        String input = keyboard.nextLine();
+        while(!input.equals("1") && !input.equals("0")){
             System.out.print("다시 입력하세요: ");
             input = keyboard.nextLine();
         }
@@ -77,9 +75,6 @@ public class CommerceSystem {
     }
 
     public void start(){
-        if(login() == -1)
-            return;
-
         System.out.println("\n안녕하세요 "+ currentCustomer.getName() + "님!");
 
         while(true) {
@@ -89,26 +84,27 @@ public class CommerceSystem {
             System.out.println("2. 의류");
             System.out.println("3. 식품");
             System.out.println("4. 관리자 모드");
-            System.out.println("0. 프로그램 종료");
+            System.out.println("5. 고객 정보");
+            System.out.println("0. 로그아웃");
 
             if(!cart.isEmpty()){
                 System.out.println("\n[ 주문 관리 ]");
-                System.out.println("5. 장바구니 확인");
-                System.out.println("6. 주문 취소");
+                System.out.println("6. 장바구니 확인");
+                System.out.println("7. 주문 취소");
             }
 
             System.out.println("-------------------------");
             System.out.print("\n메뉴를 선택하세요: ");
-            input = keyboard.next();
+            String input = keyboard.nextLine();
 
-            while (!input.equals("0") && !input.equals("1") && !input.equals("2") && !input.equals("3") && !input.equals("4")) {
+            while (!input.equals("0") && !input.equals("1") && !input.equals("2") && !input.equals("3") && !input.equals("4") && !input.equals("5")) {
                 if(!cart.isEmpty()){
-                    if(input.equals("5") || input.equals("6"))
+                    if(input.equals("6") || input.equals("7"))
                         break;
                 }
 
                 System.out.print("다시 입력하세요!: ");
-                input = keyboard.next();
+                input = keyboard.nextLine();
             }
 
 
@@ -126,20 +122,28 @@ public class CommerceSystem {
                     category = findCategory("식품");
                     while (selectMenu(category) == 1) {}
                     break;
-                case "0":
-                    return;
                 case "4":
                     if(admin.adminLogin() == 0)
                         break;
                     while(admin.adminMenu() == 1){}
                     break;
                 case "5":
-                    cart.orderCart();
+                    System.out.println("\n-| 고객 정보 |- ");
+                    System.out.println("이름 : " + currentCustomer.getName());
+                    System.out.println("이메일: " + currentCustomer.getEmail());
+                    System.out.println("등급 : " + currentCustomer.getRank());
+                    System.out.println("할인율 : " + currentCustomer.getRank().getDiscountRate() + "%");
                     break;
                 case "6":
+                    cart.orderCart(currentCustomer.getRank());
+                    break;
+                case "7":
                     cart.clearCart();
                     System.out.println("주문을 취소했습니다.");
                     break;
+                case "0":
+                    cart.clearCart();
+                    return;
                 default:
                     continue;
             }
@@ -177,8 +181,10 @@ public class CommerceSystem {
                     input2 = keyboard.nextInt();
                 }
 
-                if(input2 == 0)
+                if(input2 == 0) {
+                    keyboard.nextLine();
                     return 0;
+                }
 
                 break;
             }
@@ -194,13 +200,14 @@ public class CommerceSystem {
 
 
     public void addToCart(Product product){
+        keyboard.nextLine();
         System.out.println("위 상품을 장바구니에 추가하시겠습니까?");
         System.out.println("1. 확인        2. 취소");
 
-        input = keyboard.next();
+        String input = keyboard.nextLine();
         while (!input.equals("1") && !input.equals("2")) {
             System.out.print("다시 입력하세요! (1,2): ");
-            input = keyboard.next();
+            input = keyboard.nextLine();
         }
 
         if(input.equals("1")){
