@@ -212,6 +212,27 @@ public class Admin {
     private void adminDeleteProduct(){
         Product p = commerceSystem.selectFromProducts("(상품 삭제)");
 
+        if(p == null)
+            return;
+
+        System.out.println("상품 정보: " +p.getName() + " | " + p.getPrice() + " | " + p.getDescription() + " | 재고" + p.getAmount() + "개");
+        System.out.println("상품을 삭제하시겠습니까?");
+        System.out.println("1. 삭제    2. 취소");
+        input = keyboard.next();
+        while(!input.equals("1") && !input.equals("2")){
+            System.out.print("다시 입력하세요!: ");
+            keyboard.next();
+        }
+
+        if(input.equals("1")){
+            for(Category ct : commerceSystem.getCategoryList()){
+                if(ct.removeProduct(p.getId())){
+                    System.out.println("상품이 성공적으로 삭제되었습니다!");
+                    return;
+                }
+            }
+        }
     }
+    // ---------------------------------------------------------------------------------------------------------
 
 }

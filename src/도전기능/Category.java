@@ -57,7 +57,13 @@ public class Category {
         return products;
     }
 
-    public void RemoveProduct(int index){
-        products.remove(index);
+    public boolean removeProduct(int id){
+        for(int i=0; i<products.size(); i++){
+            if(products.get(i).getId() == id){
+                products.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
 }

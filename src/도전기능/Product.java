@@ -17,10 +17,6 @@ public class Product {
         this.amount = amount;
     }
 
-    public static int getProductId() {
-        return productId;
-    }
-
     public int getId() {
         return id;
     }
