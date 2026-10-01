@@ -39,12 +39,10 @@ public class Cart {
     }
 
     public void removeItems(Product p){
-        for(int i=0; i<cartItems.size(); i++){
-            if(p.getId() == cartItems.get(i).getProduct().getId()){
-                size -= cartItems.get(i).getQuantity();
-                cartItems.remove(i);
-            }
-        }
+        cartItems.stream().filter(item -> p.getId() == item.getProduct().getId())
+                .forEach(item -> size -= item.getQuantity());
+
+        cartItems.removeIf(item -> p.getId() == item.getProduct().getId());
     }
 
     public boolean isEmpty(){
@@ -54,34 +52,49 @@ public class Cart {
             return false;
     }
 
-    public void orderCart(){
-        System.out.println("\n아래와 같이 주문 하시겠습니까?\n");
-        System.out.println("[ 장바구니 내역 ]");
+    public int displayCart(){
+        System.out.println("\n[ 장바구니 내역 ]");
 
         int temp;
         int totalCost = 0;
-        Scanner keyboard = new Scanner(System.in);
 
         for(CartItem cartItem : cartItems)
         {
             Product p = cartItem.getProduct();
             temp = cartItem.getTotalPrice();
             totalCost += temp;
-            System.out.println( p.getName() + " | " + String.format("%,d원", temp) + " | " + p.getDescription() + " | 수량: " + cartItem.getQuantity() + "개");
+            System.out.println(" - " +  p.getName() + " | " + String.format("%,d원", temp) + " | " + p.getDescription() + " | 수량: " + cartItem.getQuantity() + "개");
         }
 
         System.out.println("\n[ 총 주문 금액 ]");
         System.out.println("상품 " + size + "개: " + String.format("%,d원", totalCost));
+        return totalCost;
+    }
+
+    public void orderCart(CustomerRank customerRank){
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("\n아래와 같이 주문 하시겠습니까?");
+        int totalCost = displayCart();
+
+        double discountRate = customerRank.getDiscountRate() / 100.0;
+        int discount = (int) (totalCost * discountRate);
+        System.out.println(customerRank.name() + " 등급 할인(" + customerRank.getDiscountRate() + "%): -" + String.format("%,d원", discount));
+        totalCost = totalCost - discount;
+        System.out.println("최종 결제 금액: " + String.format("%,d원", totalCost));
 
         System.out.println("\n1. 주문 확정      2. 메인으로 돌아가기");
 
-        String input = keyboard.next();
+        String input = keyboard.nextLine();
         while (!input.equals("1") && !input.equals("2")) {
             System.out.print("다시 입력하세요! (1,2): ");
-            input = keyboard.next();
+            input = keyboard.nextLine();
         }
         if(input.equals("1")) {
-            System.out.println("주문이 완료되었습니다! 총 금액: " + String.format("%,d원", totalCost));
+            System.out.println("주문이 완료되었습니다!");
+            System.out.println();
+
+            // rank upgrade system
+
             for(CartItem cartItem : cartItems) {
                 Product p = cartItem.getProduct();
                 int newAmount = p.getAmount() - cartItem.getQuantity();
@@ -90,8 +103,6 @@ public class Cart {
             }
             clearCart();
         }
-        //input 2-> return
-
     }
 
     public void clearCart(){

@@ -3,9 +3,9 @@ package 도전기능;
 public class Customer {
     private String name;
     private String email;
-    private String rank;
+    private CustomerRank rank;
 
-    public Customer(String name, String email, String rank){
+    public Customer(String name, String email, CustomerRank rank){
         this.name = name;
         this.email = email;
         this.rank = rank;
@@ -19,7 +19,7 @@ public class Customer {
         return email;
     }
 
-    public String getRank() {
+    public CustomerRank getRank() {
         return rank;
     }
 }

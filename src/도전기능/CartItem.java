@@ -24,8 +24,7 @@ public class CartItem {
     }
 
     public String getStringTotalPrice() {
-        int temp = totalPrice;
-        return String.format("%,d원", temp);
+        return String.format("%,d원", totalPrice);
     }
 
     public int getQuantity() {
