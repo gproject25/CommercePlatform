@@ -1,5 +1,10 @@
 package 도전기능;
 
+import 도전기능.Cart.Cart;
+import 도전기능.Customer.Customer;
+import 도전기능.ProductManagement.Category;
+import 도전기능.ProductManagement.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -164,12 +169,14 @@ public class CommerceSystem {
                     cart.displayCart();
                     break;
                 case "7":
+                    boolean found = false;
                     cart.displayCart();
                     System.out.print("\n장바구니에서 제거할 상품명을 입력하세요: ");
                     input = keyboard.nextLine();
                     for(Category ct : categoryList){
                         for(Product p : ct.getProducts()){
                             if(p.getName().equals(input)){
+                                found = true;
                                 System.out.println(p.getName() + "을 제거하시겠습니까?" );
                                 System.out.println("1. 삭제    2. 취소");
 
@@ -179,13 +186,20 @@ public class CommerceSystem {
                                     keyboard.nextLine();
                                 }
 
-                                removeFromCart(p);
-                                System.out.println("상품을 장바구니에서 제거했습니다. ");
+                                if (input.equals("1")){
+                                    removeFromCart(p);
+                                    System.out.println("상품을 장바구니에서 제거했습니다. ");
+                                }
+                                else{
+                                    System.out.println("상품 삭제를 취소했습니다.");
+                                }
                                 break;
                             }
                         }
                     }
-                    System.out.println("상품을 찾지 못했습니다");
+                    if (!found) {
+                        System.out.println("상품을 찾지 못했습니다.");
+                    }
 
                     break;
                 case "8":

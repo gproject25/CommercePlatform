@@ -1,4 +1,4 @@
-package 필수기능;
+package 필수기능.ProductManagement;
 
 import java.util.ArrayList;
 import java.util.List;
