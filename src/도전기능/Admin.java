@@ -227,7 +227,6 @@ public class Admin {
         if(input.equals("1")){
             for(Category ct : commerceSystem.getCategoryList()){
                 if(ct.removeProduct(p.getId())){
-                    System.out.println("here");
                     commerceSystem.removeFromCart(p);
                     System.out.println("상품이 성공적으로 삭제되었습니다!");
                     return;
