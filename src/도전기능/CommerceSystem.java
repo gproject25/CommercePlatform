@@ -112,15 +112,39 @@ public class CommerceSystem {
             switch (input) {
                 case "1":
                     category = findCategory("전자제품");
-                    while (selectMenu(category) == 1) {}
+                    while(true){
+                        int id= category.productMenu();
+                        if(id == 0)
+                            break;
+                        else if(id == -1)
+                            continue;
+                        else
+                            addToCart(findProduct(id));
+                    }
                     break;
                 case "2":
                     category = findCategory("의류");
-                    while (selectMenu(category) == 1) {}
+                    while(true){
+                        int id= category.productMenu();
+                        if(id == 0)
+                            break;
+                        else if(id == -1)
+                            continue;
+                        else
+                            addToCart(findProduct(id));
+                    }
                     break;
                 case "3":
                     category = findCategory("식품");
-                    while (selectMenu(category) == 1) {}
+                    while(true){
+                        int id= category.productMenu();
+                        if(id == 0)
+                            break;
+                        else if(id == -1)
+                            continue;
+                        else
+                            addToCart(findProduct(id));
+                    }
                     break;
                 case "4":
                     if(admin.adminLogin() == 0)
@@ -162,45 +186,7 @@ public class CommerceSystem {
             ct.addProducts(newItem);
     }
 
-    public int selectMenu(Category category){
-        if(category.getSize() == 0){
-            System.out.println("상품이 없습니다.");
-            return 0;
-        }
-
-        category.productMenu();
-        System.out.println("0. 뒤로가기");
-        System.out.print("상품을 선택하세요: ");
-
-        int input2;
-        while(true){
-            try{
-                input2 = keyboard.nextInt();
-                while(input2>category.getSize() || input2<0){
-                    System.out.print("다시 입력하세요!: ");
-                    input2 = keyboard.nextInt();
-                }
-
-                if(input2 == 0) {
-                    keyboard.nextLine();
-                    return 0;
-                }
-
-                break;
-            }
-            catch(InputMismatchException e) {
-                System.out.print("다시 입력하세요!: ");
-                keyboard.next();
-            }
-        }
-        Product selectedProduct = category.selectProduct(input2-1);
-        addToCart(selectedProduct);
-        return 1;
-    }
-
-
     public void addToCart(Product product){
-        keyboard.nextLine();
         System.out.println("위 상품을 장바구니에 추가하시겠습니까?");
         System.out.println("1. 확인        2. 취소");
 
@@ -234,7 +220,7 @@ public class CommerceSystem {
                 }
                 catch(InputMismatchException e){
                     System.out.print("다시 입력하세요!: ");
-                    keyboard.next();
+                    keyboard.nextLine();
                 }
             }
         }

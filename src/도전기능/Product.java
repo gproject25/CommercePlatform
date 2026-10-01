@@ -52,4 +52,8 @@ public class Product {
         int priceInt = Integer.parseInt(intprice.replace(",", "").replace("원", ""));
         return priceInt;
     }
+
+    public void printProduct(){
+        System.out.printf("%-15s | %10s | %s | 재고: %d%n", name, price, description, amount);
+    }
 }

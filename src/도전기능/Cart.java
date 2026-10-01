@@ -81,10 +81,10 @@ public class Cart {
 
         System.out.println("\n1. 주문 확정      2. 메인으로 돌아가기");
 
-        String input = keyboard.next();
+        String input = keyboard.nextLine();
         while (!input.equals("1") && !input.equals("2")) {
             System.out.print("다시 입력하세요! (1,2): ");
-            input = keyboard.next();
+            input = keyboard.nextLine();
         }
         if(input.equals("1")) {
             System.out.println("주문이 완료되었습니다!");

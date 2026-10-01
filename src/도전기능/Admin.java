@@ -44,7 +44,6 @@ public class Admin {
         System.out.println("3. 상품 삭제");
         System.out.println("4. 전체 상품 현황");
         System.out.println("0. 메인으로 돌아가기");
-
         input = keyboard.nextLine();
         while (!input.equals("1") && !input.equals("2") && !input.equals("3") && !input.equals("4") && !input.equals("0")) {
             System.out.print("다시 입력하세요!: ");
@@ -87,7 +86,7 @@ public class Admin {
 
             } catch (InputMismatchException e) {
                 System.out.print("숫자를 입력하세요!: ");
-                keyboard.next();
+                keyboard.nextLine();
             }
         }
     }
@@ -113,7 +112,7 @@ public class Admin {
             }
             catch (InputMismatchException e) {
                 System.out.print("다시 입력하세요!: ");
-                keyboard.next();
+                keyboard.nextLine();
             }
         }
     }
@@ -149,10 +148,10 @@ public class Admin {
         System.out.println(productName + " | " + price + " | " + productDesc + " | " + "재고: " + productAmount + "개");
         System.out.println("위 정보로 상품을 추가하시겠습니까?");
         System.out.println("1. 확인    2. 취소");
-        input = keyboard.next();
+        input = keyboard.nextLine();
         while(!input.equals("1") && !input.equals("2")){
             System.out.print("다시 입력하세요!: ");
-            keyboard.next();
+            keyboard.nextLine();
         }
 
         if(input.equals("1")){
@@ -224,10 +223,10 @@ public class Admin {
         System.out.println("상품 정보: " +p.getName() + " | " + p.getPrice() + " | " + p.getDescription() + " | 재고" + p.getAmount() + "개");
         System.out.println("상품을 삭제하시겠습니까?");
         System.out.println("1. 삭제    2. 취소");
-        input = keyboard.next();
+        input = keyboard.nextLine();
         while(!input.equals("1") && !input.equals("2")){
             System.out.print("다시 입력하세요!: ");
-            keyboard.next();
+            keyboard.nextLine();
         }
 
         if(input.equals("1")){
