@@ -55,7 +55,6 @@ public class Cart {
     }
 
     public void orderCart(CustomerRank customerRank){
-        System.out.println("\n아래와 같이 주문 하시겠습니까?\n");
         System.out.println("[ 장바구니 내역 ]");
 
         int temp;
@@ -69,6 +68,12 @@ public class Cart {
             totalCost += temp;
             System.out.println( p.getName() + " | " + String.format("%,d원", temp) + " | " + p.getDescription() + " | 수량: " + cartItem.getQuantity() + "개");
         }
+
+        System.out.println("1. 주문              2. 상품 제거" );
+
+
+
+        System.out.println("\n 주문 하시겠습니까?\n");
 
         System.out.println("\n[ 총 주문 금액 ]");
         System.out.println("상품 " + size + "개: " + String.format("%,d원", totalCost));

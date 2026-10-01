@@ -1,6 +1,5 @@
 package 도전기능;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Admin {
@@ -75,8 +74,7 @@ public class Admin {
     public int readPositiveInt() {
         while (true) {
             try {
-                int value = keyboard.nextInt();
-                keyboard.nextLine();
+                int value = Integer.parseInt(keyboard.nextLine());
 
                 if (value > 0) {
                     return value;
@@ -84,9 +82,8 @@ public class Admin {
 
                 System.out.print("다시 입력하세요!: ");
 
-            } catch (InputMismatchException e) {
+            } catch (NumberFormatException e) {
                 System.out.print("숫자를 입력하세요!: ");
-                keyboard.nextLine();
             }
         }
     }
@@ -101,18 +98,16 @@ public class Admin {
         int input2;
         while(true) {
             try {
-                input2 = keyboard.nextInt();
+                input2 = Integer.parseInt(keyboard.nextLine());
                 while(input2<1 || input2>commerceSystem.getCategoryList().size()){
                     System.out.print("다시 입력하세요!: ");
-                    input2 = keyboard.nextInt();
+                    input2 = Integer.parseInt(keyboard.nextLine());
                 }
-                keyboard.nextLine();
                 addProduct(input2);
                 break;
             }
-            catch (InputMismatchException e) {
+            catch (NumberFormatException e) {
                 System.out.print("다시 입력하세요!: ");
-                keyboard.nextLine();
             }
         }
     }
@@ -151,7 +146,7 @@ public class Admin {
         input = keyboard.nextLine();
         while(!input.equals("1") && !input.equals("2")){
             System.out.print("다시 입력하세요!: ");
-            keyboard.nextLine();
+            input = keyboard.nextLine();
         }
 
         if(input.equals("1")){

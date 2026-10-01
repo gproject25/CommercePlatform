@@ -1,7 +1,6 @@
 package 도전기능;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -83,6 +82,7 @@ public class CommerceSystem {
             System.out.println("1. 전자제품");
             System.out.println("2. 의류");
             System.out.println("3. 식품");
+            System.out.println("---------");
             System.out.println("4. 관리자 모드");
             System.out.println("5. 고객 정보");
             System.out.println("0. 로그아웃");
@@ -202,10 +202,10 @@ public class CommerceSystem {
             int amount = product.getAmount();
             while(true){
                 try{
-                    input2 = keyboard.nextInt();
+                    input2 = Integer.parseInt(keyboard.nextLine());
                     while(input2<0){
                         System.out.print("다시 입력하세요!: ");
-                        input2 = keyboard.nextInt();
+                        input2 = Integer.parseInt(keyboard.nextLine());
                     }
                     if(input2>amount) {
                         System.out.println("재고가 부족하여 구매할 수 없습니다.");
@@ -218,9 +218,8 @@ public class CommerceSystem {
                     cart.addItems(product, input2);
                     break;
                 }
-                catch(InputMismatchException e){
+                catch(NumberFormatException e){
                     System.out.print("다시 입력하세요!: ");
-                    keyboard.nextLine();
                 }
             }
         }

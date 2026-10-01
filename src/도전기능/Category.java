@@ -1,7 +1,6 @@
 package 도전기능;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
@@ -105,10 +104,10 @@ public class Category {
         int input;
         while(true){
             try{
-                input = keyboard.nextInt();
+                input = Integer.parseInt(keyboard.nextLine());
                 while(input>temp.size() || input<0){
                     System.out.print("다시 입력하세요: ");
-                    input = keyboard.nextInt();
+                    input = Integer.parseInt(keyboard.nextLine());
                 }
 
                 if(input == 0){
@@ -117,9 +116,8 @@ public class Category {
 
                 break;
             }
-            catch(InputMismatchException e) {
+            catch(NumberFormatException e) {
                 System.out.print("다시 입력하세요!: ");
-                keyboard.nextLine();
             }
         }
 
