@@ -1,4 +1,6 @@
-package 도전기능;
+package 도전기능.Cart;
+
+import 도전기능.ProductManagement.Product;
 
 public class CartItem {
     private Product product;

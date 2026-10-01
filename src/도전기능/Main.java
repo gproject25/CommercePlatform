@@ -1,5 +1,9 @@
 package 도전기능;
 
+import 도전기능.Customer.Customer;
+import 도전기능.Customer.CustomerRank;
+import 도전기능.ProductManagement.Product;
+
 public class Main {
     static void main(String[] args) {
 

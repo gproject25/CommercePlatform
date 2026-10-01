@@ -1,4 +1,4 @@
-package 도전기능;
+package 도전기능.ProductManagement;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,8 @@
 package 필수기능;
 
+import 필수기능.ProductManagement.Category;
+import 필수기능.ProductManagement.Product;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -87,6 +90,9 @@ public class CommerceSystem {
                 System.out.print("다시 입력하세요!: ");
                 keyboard.next();
             }
+        }
+        if (input2 == 0) {
+            return;
         }
         category.selectProduct(input2-1);
     }

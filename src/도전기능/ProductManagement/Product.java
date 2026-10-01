@@ -1,4 +1,4 @@
-package 도전기능;
+package 도전기능.ProductManagement;
 
 public class Product {
     private static int productId = 100; //product 생성시 증가

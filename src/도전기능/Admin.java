@@ -1,5 +1,8 @@
 package 도전기능;
 
+import 도전기능.ProductManagement.Category;
+import 도전기능.ProductManagement.Product;
+
 import java.util.Scanner;
 
 public class Admin {

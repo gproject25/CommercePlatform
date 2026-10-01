@@ -1,4 +1,4 @@
-package 필수기능;
+package 필수기능.ProductManagement;
 
 public class Product {
     private String name;
