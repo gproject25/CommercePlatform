@@ -39,12 +39,10 @@ public class Cart {
     }
 
     public void removeItems(Product p){
-        for(int i=0; i<cartItems.size(); i++){
-            if(p.getId() == cartItems.get(i).getProduct().getId()){
-                size -= cartItems.get(i).getQuantity();
-                cartItems.remove(i);
-            }
-        }
+        cartItems.stream().filter(item -> p.getId() == item.getProduct().getId())
+                .forEach(item -> size -= item.getQuantity());
+
+        cartItems.removeIf(item -> p.getId() == item.getProduct().getId());
     }
 
     public boolean isEmpty(){
@@ -54,29 +52,29 @@ public class Cart {
             return false;
     }
 
-    public void orderCart(CustomerRank customerRank){
-        System.out.println("[ 장바구니 내역 ]");
+    public int displayCart(){
+        System.out.println("\n[ 장바구니 내역 ]");
 
         int temp;
         int totalCost = 0;
-        Scanner keyboard = new Scanner(System.in);
 
         for(CartItem cartItem : cartItems)
         {
             Product p = cartItem.getProduct();
             temp = cartItem.getTotalPrice();
             totalCost += temp;
-            System.out.println( p.getName() + " | " + String.format("%,d원", temp) + " | " + p.getDescription() + " | 수량: " + cartItem.getQuantity() + "개");
+            System.out.println(" - " +  p.getName() + " | " + String.format("%,d원", temp) + " | " + p.getDescription() + " | 수량: " + cartItem.getQuantity() + "개");
         }
-
-        System.out.println("1. 주문              2. 상품 제거" );
-
-
-
-        System.out.println("\n 주문 하시겠습니까?\n");
 
         System.out.println("\n[ 총 주문 금액 ]");
         System.out.println("상품 " + size + "개: " + String.format("%,d원", totalCost));
+        return totalCost;
+    }
+
+    public void orderCart(CustomerRank customerRank){
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("\n아래와 같이 주문 하시겠습니까?");
+        int totalCost = displayCart();
 
         double discountRate = customerRank.getDiscountRate() / 100.0;
         int discount = (int) (totalCost * discountRate);

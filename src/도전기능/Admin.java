@@ -83,7 +83,7 @@ public class Admin {
                 System.out.print("다시 입력하세요!: ");
 
             } catch (NumberFormatException e) {
-                System.out.print("숫자를 입력하세요!: ");
+                System.out.print("숫자(Int)를 입력하세요!: ");
             }
         }
     }
@@ -226,8 +226,8 @@ public class Admin {
 
         if(input.equals("1")){
             for(Category ct : commerceSystem.getCategoryList()){
-                commerceSystem.removeFromCart(p);
                 if(ct.removeProduct(p.getId())){
+                    System.out.println("here");
                     commerceSystem.removeFromCart(p);
                     System.out.println("상품이 성공적으로 삭제되었습니다!");
                     return;
