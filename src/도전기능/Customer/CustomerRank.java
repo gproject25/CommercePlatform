@@ -15,4 +15,5 @@ public enum CustomerRank {
     public int getDiscountRate() {
         return discountRate;
     }
+
 }

@@ -74,7 +74,7 @@ public class Cart {
         return totalCost;
     }
 
-    public void orderCart(CustomerRank customerRank){
+    public int orderCart(CustomerRank customerRank){
         Scanner keyboard = new Scanner(System.in);
         System.out.println("\n아래와 같이 주문 하시겠습니까?");
         int totalCost = displayCart();
@@ -82,8 +82,8 @@ public class Cart {
         double discountRate = customerRank.getDiscountRate() / 100.0;
         int discount = (int) (totalCost * discountRate);
         System.out.println(customerRank.name() + " 등급 할인(" + customerRank.getDiscountRate() + "%): -" + String.format("%,d원", discount));
-        totalCost = totalCost - discount;
-        System.out.println("최종 결제 금액: " + String.format("%,d원", totalCost));
+        int finalCost = totalCost - discount;
+        System.out.println("최종 결제 금액: " + String.format("%,d원", finalCost));
 
         System.out.println("\n1. 주문 확정      2. 메인으로 돌아가기");
 
@@ -96,16 +96,20 @@ public class Cart {
             System.out.println("주문이 완료되었습니다!");
             System.out.println();
 
-            // rank upgrade system
 
             for(CartItem cartItem : cartItems) {
                 Product p = cartItem.getProduct();
                 int newAmount = p.getAmount() - cartItem.getQuantity();
                 System.out.println(p.getName() + " 재고가 " + p.getAmount() + "개 -> " + newAmount + "개로 업데이트되었습니다." );
                 p.setAmount(newAmount);
+
             }
+
             clearCart();
+            return totalCost; //rankup 메서드에 활용
         }
+
+        return 0;
     }
 
     public void clearCart(){

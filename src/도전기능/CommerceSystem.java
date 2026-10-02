@@ -164,6 +164,7 @@ public class CommerceSystem {
                     System.out.println("이메일: " + currentCustomer.getEmail());
                     System.out.println("등급 : " + currentCustomer.getRank());
                     System.out.println("할인율 : " + currentCustomer.getRank().getDiscountRate() + "%");
+                    System.out.println("총 사용 금액 : " + String.format("%,d원", currentCustomer.getTotalSpent()));
                     break;
                 case "6":
                     cart.displayCart();
@@ -203,7 +204,8 @@ public class CommerceSystem {
 
                     break;
                 case "8":
-                    cart.orderCart(currentCustomer.getRank());
+                    int originalCost = cart.orderCart(currentCustomer.getRank());
+                    currentCustomer.rankUp(originalCost);
                     break;
                 case "9":
                     cart.clearCart();
