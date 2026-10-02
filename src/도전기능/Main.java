@@ -71,10 +71,6 @@ public class Main {
         commerceSystem.addCustomer(customer3);
         commerceSystem.addCustomer(customer4);
 
-        while(true){
-            if(commerceSystem.login() == -1)
-                break;
-            commerceSystem.start();
-        }
+        commerceSystem.start();
     }
 }

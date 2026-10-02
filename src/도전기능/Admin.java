@@ -74,22 +74,6 @@ public class Admin {
         return 1;
     }
 
-    public int readPositiveInt() {
-        while (true) {
-            try {
-                int value = Integer.parseInt(keyboard.nextLine());
-
-                if (value > 0) {
-                    return value;
-                }
-
-                System.out.print("다시 입력하세요!: ");
-
-            } catch (NumberFormatException e) {
-                System.out.print("숫자(Int)를 입력하세요!: ");
-            }
-        }
-    }
 
     // --------------------------------- 카테고리에 상품 추가 ----------------------------------------------
     public void adminAddProduct(){

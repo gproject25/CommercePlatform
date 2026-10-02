@@ -2,119 +2,67 @@ package 도전기능;
 
 import 도전기능.Cart.Cart;
 import 도전기능.Customer.Customer;
+import 도전기능.Screens.Screens;
 import 도전기능.ProductManagement.Category;
 import 도전기능.ProductManagement.Product;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class CommerceSystem {
-    private Scanner keyboard;
+    //private Scanner keyboard;
     private Cart cart;;
     private Admin admin; //시스템마다 하나의 admin 가정
+    private int loginStatus;        //현재 사용자 login 상태 확인
 
-    private List<Category> categoryList;
-    private List<Customer> customers;
-    private Customer currentCustomer;
+    //private List<Category> categoryList;
+    //private List<Customer> customers;
+//    private CustomersSetting customersSetting;
+//
+//    private Customer currentCustomer;
+    private Screens screen;
 
     public CommerceSystem(){
-        Category electronics = new Category("전자제품");
-        Category clothing =  new Category("의류");
-        Category food = new Category("식품");
+//        Category electronics = new Category("전자제품");
+//        Category clothing =  new Category("의류");
+//        Category food = new Category("식품");
+//
+//        categoryList = new ArrayList<>();
+//        categoryList.add(electronics);
+//        categoryList.add(clothing);
+//        categoryList.add(food);
+        loginStatus = 0;    //login 안한 생태로 초기화
 
-        categoryList = new ArrayList<>();
-        categoryList.add(electronics);
-        categoryList.add(clothing);
-        categoryList.add(food);
-
-
-        keyboard = new Scanner(System.in);
+        //keyboard = new Scanner(System.in);
         cart = new Cart();
         admin = new Admin(this);
-        customers = new ArrayList<>();
+        //customers = new ArrayList<>();
+//        customersSetting = new CustomersSetting();
+
+        screen = new Screens();
     }
 
     public List<Category> getCategoryList() {
         return categoryList;
     }
 
-    public int login(){
-        System.out.println();
-        System.out.println("==================================================");
-        System.out.println("                 실시간 커머스 플랫폼");
-        System.out.println("==================================================");
-        System.out.println();
-        System.out.println("        1. 로그인                   0. 종료");
-        System.out.println();
-        System.out.println("--------------------------------------------------");
-        String input = keyboard.nextLine();
-        while(!input.equals("1") && !input.equals("0")){
-            System.out.print("다시 입력하세요: ");
-            input = keyboard.nextLine();
-        }
-        if(input.equals("1")){
-            System.out.println();
-            System.out.println("==================================================");
-            System.out.println("                    사용자 선택");
-            System.out.println("==================================================");
-            System.out.println();
-            for(int i=0; i<customers.size(); i++){
-                Customer customer = customers.get(i);
-                System.out.printf("  %d. %-12s | 등급: %s%n", i + 1, customer.getName(), customer.getRank());
-            }
-            System.out.println();
-            System.out.println("--------------------------------------------------");
-            System.out.print("로그인할 사용자를 선택하세요: ");
-            int input2 = admin.readPositiveInt();
-            while(input2 > customers.size()) {
-                System.out.print("다시 입력하세요: ");
-                input2 = admin.readPositiveInt();
-            }
-            this.currentCustomer = customers.get(input2-1);
-            return 0;
-        }
-        else
-            return -1;
-    }
-
     public void start(){
-        System.out.println("\n안녕하세요 "+ currentCustomer.getName() + "님!");
 
         while(true) {
-            System.out.println("\n=========================");
-            System.out.println("[ 실시간 커머스 플랫폼 메인 ]");
-            System.out.println("1. 전자제품");
-            System.out.println("2. 의류");
-            System.out.println("3. 식품");
-            System.out.println("--------------");
-            System.out.println("4. 관리자 모드");
-            System.out.println("5. 고객 정보");
-            System.out.println("0. 로그아웃");
+            // 1. Login
+            if(loginStatus == 0) //login 안한 상태
+                loginStatus = screen.login();
+            if(loginStatus == -1)   //프로그램 종료
+                return;
+            //loginStatus ==1 login 성공
 
-            if(!cart.isEmpty()){
-                System.out.println("\n[ 장바구니 ]");
-                System.out.println("6. 장바구니 확인");
-                System.out.println("7. 상품 제거");
-                System.out.println("8. 주문하기");
-                System.out.println("9. 주문 취소");
-            }
+            // 2. 메인 화면
+            int cartEmpty = 0;
+            if(!cart.isEmpty())
+                cartEmpty = 1;   //장바구니가 비어있지 않으면 추가메뉴 출력
+            String input = screen.mainScreen(cartEmpty);
 
-            System.out.println("=========================");
-            System.out.print("\n메뉴를 선택하세요: ");
-            String input = keyboard.nextLine();
-
-            while (!input.equals("0") && !input.equals("1") && !input.equals("2") && !input.equals("3") && !input.equals("4") && !input.equals("5")) {
-                if(!cart.isEmpty()){
-                    if(input.equals("6") || input.equals("7") || input.equals("8") || input.equals("9"))
-                        break;
-                }
-
-                System.out.print("다시 입력하세요!: ");
-                input = keyboard.nextLine();
-            }
-
-
+            //3. 카테고리 화면
             Category category = null;
             switch (input) {
                 case "1":
@@ -159,11 +107,7 @@ public class CommerceSystem {
                     while(admin.adminMenu() == 1){}
                     break;
                 case "5":
-                    System.out.println("\n-| 고객 정보 |- ");
-                    System.out.println("이름 : " + currentCustomer.getName());
-                    System.out.println("이메일: " + currentCustomer.getEmail());
-                    System.out.println("등급 : " + currentCustomer.getRank());
-                    System.out.println("할인율 : " + currentCustomer.getRank().getDiscountRate() + "%");
+                    screen.printUserInfo();
                     break;
                 case "6":
                     cart.displayCart();
@@ -203,7 +147,8 @@ public class CommerceSystem {
 
                     break;
                 case "8":
-                    cart.orderCart(currentCustomer.getRank());
+                    int originalCost = cart.orderCart(currentCustomer.getRank());
+                    currentCustomer.rankUp(originalCost);
                     break;
                 case "9":
                     cart.clearCart();
@@ -211,12 +156,11 @@ public class CommerceSystem {
                     break;
                 case "0":
                     cart.clearCart(); //로그아웃 하면 장바구니 상품들 제거
-                    return;
+                    loginStatus = 0;
                 default:
                     continue;
             }
         }
-
     }
 
     public void addCustomer(Customer customer){
