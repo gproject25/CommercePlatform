@@ -1,4 +1,4 @@
-package 도전기능.Customer;
+package Domain;
 
 public enum CustomerRank {
     BRONZE(0),

@@ -1,12 +1,32 @@
-package 도전기능;
-
-import 도전기능.Customer.Customer;
-import 도전기능.Customer.CustomerRank;
-import 도전기능.ProductManagement.Product;
+import Domain.Customer;
+import Domain.CustomerRank;
+import Domain.Product;
+import Service.CommerceSystem;
+import Service.Database;
 
 public class Main {
     static void main(String[] args) {
 
+        Database database = new Database(); //database 초기화
+
+        //------------------ 사용자 등록 --------------------
+        Customer customer1 = new Customer("Steve", "steve232@gmail.com", CustomerRank.BRONZE);
+        Customer customer2 = new Customer("Tom", "tom10@daum.net", CustomerRank.SILVER);
+        Customer customer3 = new Customer("Kim", "kim7@naver.com", CustomerRank.GOLD);
+        Customer customer4 = new Customer("Park", "park23@gmail.com", CustomerRank.PLATINUM);
+
+        database.addCustomer(customer1);
+        database.addCustomer(customer2);
+        database.addCustomer(customer3);
+        database.addCustomer(customer4);
+
+        //----------------- 카테고리 초기화 ---------------------
+        database.createCategory("전자제품");
+        database.createCategory("의류");
+        database.createCategory("식품");
+
+
+        // ---------------- 상품 초기화 ---------------------
         //전자제품
         Product product1 = new Product("Galaxy S25", "1,200,000원", "최신 안드로이드 스마트폰", 30);
         Product product2 = new Product("iPhone 16", "1,350,000원", "Apple의 최신 스마트폰", 30);
@@ -34,43 +54,33 @@ public class Main {
         Product product20 = new Product("Organic Apples", "24,900원", "신선하고 달콤한 유기농 사과", 40);
         Product product21 = new Product("Dark Chocolate", "12,900원", "카카오 함량이 높은 다크 초콜릿", 60);
 
+        database.createProducts(product1, "전자제품");
+        database.createProducts(product2, "전자제품");
+        database.createProducts(product3, "전자제품");
+        database.createProducts(product4, "전자제품");
+        database.createProducts(product5, "전자제품");
+        database.createProducts(product6, "전자제품");
+        database.createProducts(product7, "전자제품");
 
-        CommerceSystem commerceSystem = new CommerceSystem();
+        database.createProducts(product8, "의류");
+        database.createProducts(product9, "의류");
+        database.createProducts(product10, "의류");
+        database.createProducts(product11, "의류");
+        database.createProducts(product12, "의류");
+        database.createProducts(product13, "의류");
+        database.createProducts(product14, "의류");
 
-        commerceSystem.addProductToCategory(product1,"전자제품");
-        commerceSystem.addProductToCategory(product2, "전자제품");
-        commerceSystem.addProductToCategory(product3, "전자제품");
-        commerceSystem.addProductToCategory(product4, "전자제품");
-        commerceSystem.addProductToCategory(product5, "전자제품");
-        commerceSystem.addProductToCategory(product6, "전자제품");
-        commerceSystem.addProductToCategory(product7, "전자제품");
+        database.createProducts(product15, "식품");
+        database.createProducts(product16, "식품");
+        database.createProducts(product17, "식품");
+        database.createProducts(product18, "식품");
+        database.createProducts(product19, "식품");
+        database.createProducts(product20, "식품");
+        database.createProducts(product21, "식품");
 
-        commerceSystem.addProductToCategory(product8, "의류");
-        commerceSystem.addProductToCategory(product9, "의류");
-        commerceSystem.addProductToCategory(product10, "의류");
-        commerceSystem.addProductToCategory(product11, "의류");
-        commerceSystem.addProductToCategory(product12, "의류");
-        commerceSystem.addProductToCategory(product13, "의류");
-        commerceSystem.addProductToCategory(product14, "의류");
 
-        commerceSystem.addProductToCategory(product15, "식품");
-        commerceSystem.addProductToCategory(product16, "식품");
-        commerceSystem.addProductToCategory(product17, "식품");
-        commerceSystem.addProductToCategory(product18, "식품");
-        commerceSystem.addProductToCategory(product19, "식품");
-        commerceSystem.addProductToCategory(product20, "식품");
-        commerceSystem.addProductToCategory(product21, "식품");
-
-        Customer customer1 = new Customer("Steve", "steve232@gmail.com", CustomerRank.BRONZE);
-        Customer customer2 = new Customer("Tom", "tom10@daum.net", CustomerRank.SILVER);
-        Customer customer3 = new Customer("Kim", "kim7@naver.com", CustomerRank.GOLD);
-        Customer customer4 = new Customer("Park", "park23@gmail.com", CustomerRank.PLATINUM);
-
-        commerceSystem.addCustomer(customer1);
-        commerceSystem.addCustomer(customer2);
-        commerceSystem.addCustomer(customer3);
-        commerceSystem.addCustomer(customer4);
-
+        // ----------- 커머스 시스템 초기화 ----------------
+        CommerceSystem commerceSystem = new CommerceSystem(database);
         commerceSystem.start();
     }
 }
