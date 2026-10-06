@@ -24,19 +24,19 @@ public class ProductScreen {
             return "상품없음";
         }
 
-        //4-1 상품 화면 가격별 출력
+        //3-2-1 상품 화면 가격별 출력 + 사용자 입력
         System.out.println("\n[ " + category.getCategoryName() +  " 카테고리 ]");
         System.out.println("1. 전체 상품 보기");
         System.out.println("2. 가격대별 필터링 (100만원 이하)");
         System.out.println("3. 가격대별 필터링 (100만원 초과)");
         System.out.println("0. 뒤로가기");
 
-        //4-2 사용자 입력
         String input = userInput.fourNumberInput();
 
         return input;
     }
 
+    ////3-2-2. 특정 상품을 장바구니에 추가할 준비
     public Product selectProduct(String input, Category category){
         List<Product> temp = null;
         switch(input){

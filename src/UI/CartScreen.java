@@ -21,17 +21,18 @@ public class CartScreen {
         return cart.isEmpty();
     }
 
+    //6. 장바구니 메뉴 + 기능
     public long handleCartMenu(String input, CustomerRank currentCustomerRank){
-        if(input.equals("6")){  //장바구니 확인
+        if(input.equals("6")){  //6-1. 장바구니 확인
             cart.displayCart();
         }
-        else if(input.equals("7")){ //상품 제거
+        else if(input.equals("7")){ //6-2 상품 제거
             removeFromCart();
         }
-        else if(input.equals("8")){ //주문하기
+        else if(input.equals("8")){ //6-3 주문하기
             return placeOrder(currentCustomerRank);
         }
-        else{   //주문 취소
+        else{                       //6-4. 주문 취소
             cart.clearCart();
             System.out.println("주문을 취소했습니다.");
         }
@@ -39,6 +40,7 @@ public class CartScreen {
         return 0;
     }
 
+    //3-2-3 장바구니 추가
     public void addToCart(Product product){
         // 장바구니에 상품 담기 메뉴
         System.out.println("위 상품을 장바구니에 추가하시겠습니까?");
@@ -57,6 +59,7 @@ public class CartScreen {
         }
     }
 
+    //6-2 상품 제거
     public void removeFromCart(){
         boolean found = false;
         cart.displayCart();
@@ -87,6 +90,7 @@ public class CartScreen {
         }
     }
 
+    //4-3 Optional: 관리자 삭제 -> 장바구니에서 매칭되는 상품도 제거
     public void removeFromAdmin(){
         if(database.deleteFromCartSize() == 0){
             return;
@@ -96,6 +100,7 @@ public class CartScreen {
         database.clearDeleteFromCart();
     }
 
+    //6-3 주문하기
     public long placeOrder(CustomerRank currentCustomerRank){
         System.out.println("\n아래와 같이 주문 하시겠습니까?");
         int totalCost = cart.displayCart();

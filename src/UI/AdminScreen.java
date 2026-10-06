@@ -16,6 +16,7 @@ public class AdminScreen {
         this.password = "admin123";
     }
 
+    //4-1 admin login
     public int adminLogin(){
         System.out.print("\n관리자 비밀번호를 입력해주세요: ");
         int wrongCount = 1;
@@ -30,6 +31,7 @@ public class AdminScreen {
         return 1;
     }
 
+    //4-2 admin menu 기능
     public void adminMenuHandler(){
         while(true){
             System.out.println("\n[ 관리자 모드 ]");
@@ -43,18 +45,18 @@ public class AdminScreen {
 
             switch(input) {
                 case "1":
-                    adminAddProduct();
+                    adminAddProduct();      //상품 추가
                     break;
                 case "2":
-                    adminEditProduct();
+                    adminEditProduct();     //상품 수정
                     break;
                 case "3":
-                    adminDeleteProduct();
+                    adminDeleteProduct();   //상품 삭제
                     break;
                 case "4":
                     database.printAllProducts(0);
                     break;
-                case "0":
+                case "0":                   //취소
                     return;
                 default:
                     return;
@@ -63,6 +65,8 @@ public class AdminScreen {
     }
 
     // --------------------------------- 카테고리에 상품 추가 ----------------------------------------------
+
+    //4-2-1.  상품을 데이터베이스로 추가
     private void adminAddProduct(){
         //카테고리 list 출력
         System.out.println("\n어느 카테고리에 상품을 추가하시겠습니까?");
@@ -114,6 +118,7 @@ public class AdminScreen {
 
 
     // ---------------------------------  상품 수정 ----------------------------------------------
+    //4-2-2.  특정 상품을 수정
     private void adminEditProduct(){
         System.out.println("\n[ (상품 수정) 전체 상품 ID 목록 ] ");
         database.printAllProducts(1);
@@ -140,6 +145,7 @@ public class AdminScreen {
         String input = userInput.fourNumberInput();
         System.out.println();
 
+        //사용자 입력에 따라 가격 수정, 설명 수정, 재고수량 수정
         switch(input){
             case "1": //가격 수정
                 System.out.println("현재 가격: " + foundProduct.getPrice());
@@ -148,14 +154,14 @@ public class AdminScreen {
                 System.out.println(foundProduct.getName() + "의 가격이 " + foundProduct.getPrice() + " -> " + newPrice + "으로 수정되었습니다.");
                 foundProduct.setPrice(newPrice);
                 break;
-            case "2":
+            case "2":  //Description 변경
                 System.out.println("현재 설명: " + foundProduct.getDescription());
                 System.out.print("새로운 설명을 입력해주세요: ");
                 String newDesc = userInput.readStringInput();
                 System.out.println(foundProduct.getName() + "의 설명이 '" + foundProduct.getDescription() + "' -> '" + newDesc + "'으로 수정되었습니다.");
                 foundProduct.setDescription(newDesc);
                 break;
-            case "3":
+            case "3":   //재고수량 수정
                 System.out.println("현재 재고수량: " + foundProduct.getAmount());
                 System.out.print("새로운 재고수량을 입력해주세요: ");
                 int newAmount = userInput.readPositiveInt();
@@ -172,6 +178,7 @@ public class AdminScreen {
 
 
     // --------------------------------- 카테고리에서 상품 삭제 ----------------------------------------------
+    //4-2-3.  상품을 데이터베이스에서 삭제
     private void adminDeleteProduct(){
         System.out.println("\n[ (상품 삭제) 전체 상품 ID 목록 ] ");
         database.printAllProducts(1);

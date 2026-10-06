@@ -52,6 +52,7 @@ public class CustomerScreen {
 
     }
 
+    //5. 사용자 정보 출력
     public void printCurrentCustomer(){
         System.out.println("\n-| 고객 정보 |- ");
         System.out.println("이름 : " + currentCustomer.getName());
@@ -64,6 +65,10 @@ public class CustomerScreen {
     public CustomerRank getCurrentCustomerRank(){
         return currentCustomer.getRank();
     }
+
+
+
+    // ====================== 추가 기능: 상품 구매시 등급 upgrade 여부 확인 ==========================================
 
     public void rankUp(long totalCost){
         //사용자의 누적 금액 추가
