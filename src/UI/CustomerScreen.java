@@ -5,14 +5,11 @@ import Domain.CustomerRank;
 import Service.Database;
 import Service.UserInput;
 
-public class CustomerScreen {
+public class CustomerScreen extends Screen{
     private Customer currentCustomer;   //현재 login 된 사용자
-    private UserInput userInput;
-    private Database database;
 
     public CustomerScreen(UserInput userInput, Database database){
-        this.userInput = userInput;
-        this.database = database;
+        super(userInput, database);
     }
 
     public int loginScreen(){

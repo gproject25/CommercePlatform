@@ -6,15 +6,12 @@ import Domain.Product;
 import Service.Database;
 import Service.UserInput;
 
-public class CartScreen {
+public class CartScreen extends Screen{
     private Cart cart;
-    private UserInput userInput;
-    private Database database;
 
     public CartScreen(UserInput userInput, Database database){
         cart = new Cart();
-        this.userInput = userInput;
-        this.database = database;
+        super(userInput, database);
     }
 
     public boolean cartIsEmpty(){

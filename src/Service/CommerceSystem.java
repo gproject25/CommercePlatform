@@ -41,7 +41,7 @@ public class CommerceSystem {
             int cartEmpty = 0;
             if(!cartScreen.cartIsEmpty())
                 cartEmpty = 1;   //장바구니가 비어있지 않으면 추가메뉴 출력
-            String input = mainScreen(cartEmpty);
+            String input = categoryScreen.mainScreen(cartEmpty);
 
 
             //3. 상품 조회 + 선택 단계
@@ -50,7 +50,13 @@ public class CommerceSystem {
                 Category category = categoryScreen.selectCategory(input);
 
                 //3-2 상품 선택
-                handleProduct(category);
+                Product selectedProduct = productScreen.handleProduct(category);
+
+                //3-3 장바구니 추가
+                if(selectedProduct != null){
+                    cartScreen.addToCart(selectedProduct);
+                }
+
             }
 
             //4. 관리자 모드 실행
@@ -84,54 +90,6 @@ public class CommerceSystem {
                 cartScreen.logoutClearCart();
                 loginStatus = 0;
             }
-        }
-    }
-
-    public String mainScreen(int cartEmpty){
-        //2-1. 메인 화면 출력
-        System.out.println("\n=========================");
-        System.out.println("[ 실시간 커머스 플랫폼 메인 ]");
-        System.out.println("1. 전자제품");
-        System.out.println("2. 의류");
-        System.out.println("3. 식품");
-        System.out.println("--------------");
-        System.out.println("4. 관리자 모드");
-        System.out.println("5. 고객 정보");
-        System.out.println("0. 로그아웃");
-
-        //2-2 추가 징바구니 화면
-        if(cartEmpty == 1){
-            System.out.println("\n[ 장바구니 ]");
-            System.out.println("6. 장바구니 확인");
-            System.out.println("7. 상품 제거");
-            System.out.println("8. 주문하기");
-            System.out.println("9. 주문 취소");
-        }
-
-        System.out.println("=========================");
-        System.out.print("\n메뉴를 선택하세요: ");
-
-        //2-3 사용자 입력
-        String input = userInput.mainScreenInput(cartEmpty);
-        return input;
-    }
-
-    //3-2 카테고리 선택후, 상품 선택 단계
-    public void handleProduct(Category category){
-        while(true) {
-            //3-2-1. 상품 화면 가격별 출력
-            String input = productScreen.printScreen(category);
-
-            if(input.equals("상품없음") || input.equals("0")){
-                return;
-            }
-
-            //3-2-2. 상품 선택
-            Product p = productScreen.selectProduct(input,category);
-            if(p == null) continue;
-
-            //3-2-3 장바구니 추가
-            cartScreen.addToCart(p);
         }
     }
 

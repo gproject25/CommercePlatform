@@ -5,14 +5,11 @@ import Domain.Product;
 import Service.Database;
 import Service.UserInput;
 
-public class AdminScreen {
-    private UserInput userInput;
-    private Database database;
+public class AdminScreen extends Screen{
     private String password;
 
     public AdminScreen(UserInput userInput, Database database){
-        this.userInput = userInput;
-        this.database = database;
+        super(userInput, database);
         this.password = "admin123";
     }
 

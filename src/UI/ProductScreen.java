@@ -7,24 +7,39 @@ import Service.UserInput;
 
 import java.util.List;
 
-public class ProductScreen {
-
-    private UserInput userInput;
-    private Database database;
+public class ProductScreen extends Screen{
 
     public ProductScreen(UserInput userInput, Database database){
-        this.userInput = userInput;
-        this.database = database;
-
+        super(userInput, database);
     }
 
+    //3-2 카테고리 선택후, 상품 선택 단계
+    public Product handleProduct(Category category){
+        while(true) {
+            //3-2-1. 상품 화면 가격별 출력
+            String input = printScreen(category);
+
+            if(input.equals("상품없음") || input.equals("0")){
+                return null;
+            }
+
+            //3-2-2. 상품 선택
+            Product p = selectProduct(input,category);
+            if(p == null) continue;
+
+            //장바구니 추가
+            return p;
+        }
+    }
+
+    //3-2-1. 상품 화면 가격별 출력
     public String printScreen(Category category){
         if(database.categorySize(category) == 0){
             System.out.println("상품이 없습니다.");
             return "상품없음";
         }
 
-        //3-2-1 상품 화면 가격별 출력 + 사용자 입력
+        //상품 화면 가격별 출력 + 사용자 입력
         System.out.println("\n[ " + category.getCategoryName() +  " 카테고리 ]");
         System.out.println("1. 전체 상품 보기");
         System.out.println("2. 가격대별 필터링 (100만원 이하)");
